@@ -10,10 +10,10 @@ class API {
   Future<LoginResponse> login(LoginRequest request) async {
     final sharedPrefsTask = SharedPreferences.getInstance();
     final response =
-        await http.post(baseUrl + "api/auth/", body: request.toJson());
+        await http.post(baseUrl + "api/users/login/", body: request.toJson());
 
     print(request.toJson());
-    print(baseUrl + "api/auth/");
+    print(baseUrl + "api/users/login/");
     if (response.statusCode == 200 || response.statusCode == 400) {
       if (response.statusCode == 200) {
         var prefs = await sharedPrefsTask;

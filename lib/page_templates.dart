@@ -20,6 +20,7 @@ class _BasicPageState extends State<BasicPage> {
       onWillPop: () {},
       child: Scaffold(
         key: scaffoldKey,
+        extendBody: true,
         resizeToAvoidBottomInset: false,
         resizeToAvoidBottomPadding: false,
         body: SingleChildScrollView(
