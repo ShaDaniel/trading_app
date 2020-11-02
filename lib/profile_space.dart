@@ -14,38 +14,36 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return MainScreens(
-      child: Container(
-          child: Column(children: <Widget>[
-        SizedBox(height: 30),
-        Image.asset("lib/pics/profile.png", width: 320, height: 320),
-        Row(
-          children: [
-            Expanded(
-                child: PrimaryTextField(
-              labelText: "Name",
-            )),
-            Expanded(child: PrimaryTextField(labelText: "Surname"))
-          ],
+    return Container(
+        child: Column(children: <Widget>[
+      SizedBox(height: 30),
+      Image.asset("lib/pics/profile.png", width: 320, height: 320),
+      Row(
+        children: [
+          Expanded(
+              child: PrimaryTextField(
+            labelText: "Name",
+          )),
+          Expanded(child: PrimaryTextField(labelText: "Surname"))
+        ],
+      ),
+      IntlPhoneField(
+        decoration: InputDecoration(
+          labelText: "Phone number",
+          labelStyle: TextStyle(fontSize: 25, color: Color(0xff2C1A1D)),
         ),
-        IntlPhoneField(
-          decoration: InputDecoration(
-            labelText: "Phone number",
-            labelStyle: TextStyle(fontSize: 25, color: Color(0xff2C1A1D)),
-          ),
-          initialCountryCode: "RU",
-        ),
-        PrimaryTextField(
-            labelText: "Address", preIcon: Icons.location_on_outlined),
-        SizedBox(height: 15),
-        SecondaryButton("Exit", (context) {
-          globals.prefs.remove('flutterLogin');
-          globals.prefs.remove('flutterPassword');
+        initialCountryCode: "RU",
+      ),
+      PrimaryTextField(
+          labelText: "Address", preIcon: Icons.location_on_outlined),
+      SizedBox(height: 15),
+      SecondaryButton("Exit", (context) {
+        globals.prefs.remove('flutterLogin');
+        globals.prefs.remove('flutterPassword');
 
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => LoginPage()));
-        }),
-      ])),
-    );
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      }),
+    ]));
   }
 }

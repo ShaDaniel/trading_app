@@ -12,8 +12,8 @@ class API {
     final response =
         await http.post(baseUrl + "api/users/login/", body: request.toJson());
 
-    print(request.toJson());
-    print(baseUrl + "api/users/login/");
+    print(request.toJson()); //debug
+    print(baseUrl + "api/users/login/"); //debug
     if (response.statusCode == 200 || response.statusCode == 400) {
       if (response.statusCode == 200) {
         var prefs = await sharedPrefsTask;
@@ -26,7 +26,7 @@ class API {
   }
 
   Future<RegisterResponse> register(RegisterRequest request) async {
-    final response = await http.post(baseUrl + "api/users/new",
+    final response = await http.post(baseUrl + "api/users/new/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

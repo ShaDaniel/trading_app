@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:login_page/feed.dart';
 import 'package:login_page/page_templates.dart';
+import 'package:login_page/profile_space.dart';
 
 class MainScreens extends StatefulWidget {
-  final Widget child;
-
-  MainScreens({this.child});
   @override
   _MainScreensState createState() => _MainScreensState();
 }
 
 class _MainScreensState extends State<MainScreens> {
+  final pages = <Widget>[ProfilePage(), Container(), Container(), FeedList()];
+  int _curIndex = 0;
   @override
   Widget build(BuildContext context) {
     return BasicPage(
-        child: widget.child,
+        child: pages[_curIndex],
         bottomPanel: Theme(
           data: Theme.of(context).copyWith(
               canvasColor: Color(0xffA67F8E),
@@ -21,6 +22,11 @@ class _MainScreensState extends State<MainScreens> {
                   .textTheme
                   .copyWith(caption: new TextStyle(color: Color(0xff2C1A1D)))),
           child: BottomNavigationBar(
+            onTap: (index) {
+              _curIndex = index;
+              setState(() {});
+            },
+            currentIndex: _curIndex,
             items: [
               BottomNavigationBarItem(
                   icon: Icon(Icons.person_outline), label: "profile"),

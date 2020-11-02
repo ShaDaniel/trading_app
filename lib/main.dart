@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:login_page/globals.dart';
 import 'package:login_page/logout_page.dart';
+import 'package:login_page/main4screen.dart';
 import 'package:login_page/page_templates.dart';
 import 'package:login_page/profile_space.dart';
 import 'package:login_page/rest_api/api.dart';
@@ -41,9 +42,9 @@ class MyApp extends StatelessWidget {
           accentColor: Color(0xffDBB3B1),
           fontFamily: 'Lato',
         ),
-        home: loggedIn ? ProfilePage() : LoginPage(),
+        home: loggedIn ? MainScreens() : LoginPage(),
         routes: {
-          "/profile": (_) => ProfilePage(),
+          "/profile": (_) => MainScreens(),
           "/logout": (_) => LogoutPage(),
           "/login": (_) => LoginPage(),
         });
