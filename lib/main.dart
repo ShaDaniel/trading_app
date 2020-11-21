@@ -153,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
               textColor: Color(0xff2C1A1D),
               fontSize: 25.0);
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ProfilePage()));
+              context, MaterialPageRoute(builder: (context) => MainScreens()));
         }
       });
     }

@@ -26,7 +26,7 @@ class API {
   }
 
   Future<RegisterResponse> register(RegisterRequest request) async {
-    final response = await http.post(baseUrl + "api/users/new/",
+    final response = await http.post(baseUrl + "api/users/",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
