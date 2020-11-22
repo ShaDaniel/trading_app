@@ -6,6 +6,10 @@ class BasicPage extends StatefulWidget {
 
   BasicPage({this.child, this.bottomPanel});
 
+  static void switchPage(BuildContext context, StatefulWidget page) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => page));
+  }
+
   @override
   _BasicPageState createState() => _BasicPageState();
 }
@@ -46,8 +50,4 @@ class _BasicPageState extends State<BasicPage> {
       ),
     );
   }
-}
-
-void switchPage(BuildContext context, StatefulWidget page) {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => page));
 }
