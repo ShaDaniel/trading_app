@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:login_page/buttons.dart';
+import 'package:login_page/common_elements/buttons.dart';
+import 'package:login_page/common_elements/text_elements.dart';
 import 'package:login_page/page_templates.dart';
 import 'package:login_page/rest_api/api.dart';
 import 'package:login_page/rest_api/register.dart';
-import 'package:login_page/text_fields.dart';
+import 'package:login_page/common_elements/text_fields.dart';
 import 'main.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -45,15 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.only(left: 10),
               ),
-              Center(
-                  heightFactor: 2,
-                  child: Text(
-                    "Register",
-                    style: TextStyle(
-                        fontSize: 50,
-                        color: Color(0xff2C1A1D),
-                        fontWeight: FontWeight.bold),
-                  )),
+              Center(heightFactor: 2, child: TextPrimary(text: "Register")),
               PrimaryTextField(
                 onSaved: (value) => registerRequest.email = value,
                 labelText: "e-mail",

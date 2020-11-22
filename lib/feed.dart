@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_page/common_elements/text_elements.dart';
 import 'package:login_page/rest_api/listings.dart';
 
 import 'rest_api/api.dart';
@@ -22,20 +23,8 @@ class ListingPallet extends StatelessWidget {
           ),
         ),
       ),
-      Text(
-        listing.title,
-        style: TextStyle(
-            fontSize: 20,
-            color: Color(0xff2C1A1D),
-            fontWeight: FontWeight.bold),
-      ),
-      Text(
-        "\$${listing.price.toString()}",
-        style: TextStyle(
-          fontSize: 20,
-          color: Color(0xff2C1A1D),
-        ),
-      ),
+      TextSecondary(text: listing.title, bold: true),
+      TextSecondary(text: "\$${listing.price.toString()}"),
     ]);
   }
 }
@@ -76,7 +65,9 @@ class _FeedListState extends State<FeedList> {
         itemCount: (_listings.length + 1) ~/ 2,
         separatorBuilder: (context, i) => Divider(),
         itemBuilder: (context, i) {
+          // если кончились объявления в кэше, получаем с бэка
           if ((i + 1) * 2 >= _listings.length) {
+            // локер для разных потоков
             if (!fetching && res != 0) {
               _loadMoreListings();
             }
@@ -99,6 +90,7 @@ class _FeedListState extends State<FeedList> {
 
   @override
   void initState() {
+    // при загрузке страницы получаем первую порцию объявлений
     super.initState();
     _loadMoreListings();
   }
