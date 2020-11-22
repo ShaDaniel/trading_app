@@ -35,13 +35,14 @@ class _FeedListState extends State<FeedList> {
 
   Widget _buildAdvertisements() {
     return ListView.separated(
-        itemCount: _listings.length,
+        itemCount: (_listings.length + 1) ~/ 2,
         separatorBuilder: (context, i) => Divider(),
         itemBuilder: (context, i) {
-          if (i >= _listings.length) {
+          if ((i + 1) * 2 >= _listings.length) {
             if (!fetching && res != 0) {
               _loadMoreListings();
             }
+            print(_listings.length);
           }
           return Container(
               height: 200,
@@ -55,7 +56,7 @@ class _FeedListState extends State<FeedList> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
                             child: Image.asset(
-                              "lib/pics/${i % 6 + 1}.png",
+                              "lib/pics/${i * 2 % 6 + 1}.png",
                               width: 200,
                               height: 200,
                               fit: BoxFit.fill,
@@ -63,21 +64,21 @@ class _FeedListState extends State<FeedList> {
                           ),
                         ),
                         Text(
-                          _listings[i].title,
+                          _listings[i * 2].title,
                           style: TextStyle(
                               fontSize: 30,
                               color: Color(0xff2C1A1D),
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "\$${_listings[i].price.toString()}",
+                          "\$${_listings[i * 2].price.toString()}",
                           style: TextStyle(
                             fontSize: 20,
                             color: Color(0xff2C1A1D),
                           ),
                         ),
                       ]),
-                  (i + 1) >= _listings.length
+                  (i * 2 + 1) >= _listings.length
                       ? Container(
                           width: 200,
                         )
@@ -88,7 +89,7 @@ class _FeedListState extends State<FeedList> {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: Image.asset(
-                                    "lib/pics/${(i + 1) % 6 + 1}.png",
+                                    "lib/pics/${(i * 2 + 1) % 6 + 1}.png",
                                     width: 200,
                                     height: 200,
                                     fit: BoxFit.fill,
@@ -96,14 +97,14 @@ class _FeedListState extends State<FeedList> {
                                 ),
                               ),
                               Text(
-                                _listings[i + 1].title,
+                                _listings[i * 2 + 1].title,
                                 style: TextStyle(
                                     fontSize: 30,
                                     color: Color(0xff2C1A1D),
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                "\$${_listings[i + 1].price.toString()}",
+                                "\$${_listings[i * 2 + 1].price.toString()}",
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Color(0xff2C1A1D),
