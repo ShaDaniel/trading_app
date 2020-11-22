@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login_page/main4screen.dart';
+import 'package:login_page/rest_api/listings.dart';
+
+import 'rest_api/api.dart';
 
 class FeedList extends StatefulWidget {
   @override
@@ -7,16 +9,48 @@ class FeedList extends StatefulWidget {
 }
 
 class _FeedListState extends State<FeedList> {
+  final _listings = <Listing>[];
+  int page = 1;
+  int res = 0;
+  bool fetching = false;
+
+  void _loadMoreListings() {
+    fetching = true;
+    API().getListings(pageNum: page).then((value) {
+      setState(() {
+        if (value != null) {
+          if (value?.count == null) {
+            res = 0;
+            return;
+          }
+          _listings.addAll(value.results);
+          res = value.results.length;
+          page++;
+          fetching = false;
+          print(_listings.length);
+        }
+      });
+    });
+  }
+
   Widget _buildAdvertisements() {
     return ListView.builder(
         itemExtent: 300,
+        itemCount: _listings.length * 2,
         itemBuilder: (context, i) {
           if (i.isOdd) return Divider();
 
           final index = i ~/ 2;
+          if (index >= _listings.length) {
+            if (!fetching) {
+              _loadMoreListings();
+            }
+            if (res == 0) {
+              return Divider();
+            }
+          }
           return Container(
               height: 300,
-              //title: Text("Ad #$index\nSpecial offer!"),
               child: Column(children: [
                 Text(
                   "Geese Movements #$index",
@@ -45,6 +79,12 @@ class _FeedListState extends State<FeedList> {
                 ),
               ]));
         });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMoreListings();
   }
 
   @override

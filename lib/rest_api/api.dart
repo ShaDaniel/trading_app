@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:login_page/rest_api/listings.dart';
 import 'package:login_page/rest_api/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:login_page/rest_api/register.dart';
@@ -37,6 +38,17 @@ class API {
     else {
       print(response.statusCode);
       throw Exception("Registration went wrong");
+    }
+  }
+
+  Future<ListingsResponse> getListings({int pageNum = 1}) async {
+    final page = "?page=$pageNum";
+    final response = await http.get(baseUrl + "api/listings/" + page);
+    if (response.statusCode == 200 || response.statusCode == 404)
+      return ListingsResponse.fromJson(json.decode(response.body));
+    else {
+      print(response.statusCode);
+      throw Exception("Listings get went wrong");
     }
   }
 }
