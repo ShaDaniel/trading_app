@@ -33,7 +33,7 @@ Listing _$ListingFromJson(Map<String, dynamic> json) {
     title: json['title'] as String,
     description: json['description'] as String,
     price: json['price'] as int,
-    category: json['category'] as int,
+    category: json['category'] as String,
     status: json['status'] as int,
     quantity: json['quantity'] as int,
     sold: json['sold'] as int,

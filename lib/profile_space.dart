@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:login_page/buttons.dart';
+import 'package:login_page/common_elements/buttons.dart';
 import 'package:login_page/main.dart';
 import 'package:login_page/main4screen.dart';
-import 'package:login_page/text_fields.dart';
-import 'globals.dart' as globals;
+import 'package:login_page/common_elements/text_fields.dart';
+import 'common_elements/globals.dart' as globals;
 
 class ProfilePage extends StatefulWidget {
   @override

@@ -6,3 +6,4 @@ Future<SharedPreferences> sharedPreferencesTask =
     SharedPreferences.getInstance();
 SharedPreferences prefs;
 bool loggedIn = false;
+String token = null;

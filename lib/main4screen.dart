@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_page/add_listing.dart';
 import 'package:login_page/feed.dart';
 import 'package:login_page/page_templates.dart';
 import 'package:login_page/profile_space.dart';
@@ -15,6 +16,13 @@ class _MainScreensState extends State<MainScreens> {
   Widget build(BuildContext context) {
     return BasicPage(
         child: pages[_curIndex],
+        floatingBtn: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => AddListing()));
+          },
+        ),
         bottomPanel: Theme(
           data: Theme.of(context).copyWith(
               canvasColor: Color(0xffA67F8E),
@@ -22,6 +30,7 @@ class _MainScreensState extends State<MainScreens> {
                   .textTheme
                   .copyWith(caption: new TextStyle(color: Color(0xff2C1A1D)))),
           child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             onTap: (index) {
               _curIndex = index;
               setState(() {});

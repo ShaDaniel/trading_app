@@ -47,13 +47,12 @@ class _FeedListState extends State<FeedList> {
       setState(() {
         // если есть очередные объявления, добавляем в кэш
         if (value != null) {
-          if (value?.count == null) {
-            res = 0;
-            return;
-          }
+          if (value.count == null) return;
+          if (value.count == 10) page++;
+          // если в прошлый раз были получены не все 10 элементов, перезатираем
+          _listings.removeRange(_listings.length - res, _listings.length);
           _listings.addAll(value.results);
-          res = value.results.length;
-          page++;
+          res = value.results.length % 10;
           fetching = false;
         }
       });
@@ -68,10 +67,9 @@ class _FeedListState extends State<FeedList> {
           // если кончились объявления в кэше, получаем с бэка
           if ((i + 1) * 2 >= _listings.length) {
             // локер для разных потоков
-            if (!fetching && res != 0) {
+            if (!fetching) {
               _loadMoreListings();
             }
-            print(_listings.length);
           }
           return Container(
               height: 200,

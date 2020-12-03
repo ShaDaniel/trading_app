@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:login_page/rest_api/listing_create.dart';
 import 'package:login_page/rest_api/listings.dart';
 import 'package:login_page/rest_api/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:login_page/rest_api/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:login_page/common_elements/globals.dart' as globals;
 
 class API {
   String baseUrl = "http://45.9.190.78:7777/";
@@ -49,6 +51,22 @@ class API {
     else {
       print(response.statusCode);
       throw Exception("Listings get went wrong");
+    }
+  }
+
+  Future<Listing> listingCreate(ListingRequest request) async {
+    final response = await http.post(baseUrl + "api/listings/",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': globals.token
+        },
+        body: jsonEncode(request.toJson()));
+    print(response.body); //debug
+    if (response.statusCode == 201 || response.statusCode == 400)
+      return Listing.fromJson(json.decode(response.body));
+    else {
+      print(response.statusCode);
+      throw Exception("Listing create went wrong");
     }
   }
 }

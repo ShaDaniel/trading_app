@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:login_page/globals.dart';
+import 'package:login_page/common_elements/globals.dart';
+import 'package:login_page/common_elements/text_elements.dart';
 import 'package:login_page/logout_page.dart';
 import 'package:login_page/main4screen.dart';
 import 'package:login_page/page_templates.dart';
-import 'package:login_page/profile_space.dart';
 import 'package:login_page/rest_api/api.dart';
 import 'package:login_page/rest_api/login.dart';
 import 'package:login_page/sign_up.dart';
-import 'package:login_page/text_fields.dart';
-import 'buttons.dart';
-import 'globals.dart' as globals;
+import 'package:login_page/common_elements/text_fields.dart';
+import 'common_elements/buttons.dart';
+import 'common_elements/globals.dart' as globals;
 
 Future<void> initCache() async {
   var prefs = globals.prefs = await globals.sharedPreferencesTask;
@@ -21,6 +21,7 @@ Future<void> initCache() async {
         password: prefs.getString('flutterPassword'));
     var response = await API().login(request);
     if (response.token.isNotEmpty) {
+      globals.token = "Token " + response.token;
       loggedIn = true;
     }
   }
@@ -75,15 +76,7 @@ class _LoginPageState extends State<LoginPage> {
     return BasicPage(
       child: Column(
         children: <Widget>[
-          Center(
-              heightFactor: 4,
-              child: Text(
-                "Welcome",
-                style: TextStyle(
-                    fontSize: 50,
-                    color: Color(0xff2C1A1D),
-                    fontWeight: FontWeight.bold),
-              )),
+          Center(heightFactor: 4, child: TextPrimary(text: "Welcome")),
           Form(
             key: _formKey,
             child: Column(
@@ -120,7 +113,8 @@ class _LoginPageState extends State<LoginPage> {
             child: Text("- OR -"),
           ),
           SizedBox(height: 5),
-          PrimaryButton("Sign up", switchPage, [context, SignUpPage()]),
+          PrimaryButton(
+              "Sign up", BasicPage.switchPage, [context, SignUpPage()]),
           SizedBox(height: 15),
           SecondaryButton("Forgot password?", (context) {}),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PrimaryTextField extends StatelessWidget {
   final String labelText;
@@ -8,6 +9,8 @@ class PrimaryTextField extends StatelessWidget {
   final FormFieldValidator validator;
   final TextEditingController controller;
   final Function onSaved;
+  final int maxLines;
+  final TextInputType keyboardType;
 
   PrimaryTextField({
     Key key,
@@ -18,12 +21,21 @@ class PrimaryTextField extends StatelessWidget {
     this.validator,
     this.controller,
     this.onSaved,
-  }) : super(key: key);
+    this.maxLines = 1,
+    this.keyboardType = TextInputType.text,
+  });
   @override
   Widget build(BuildContext context) {
     return Theme(
         data: Theme.of(context).copyWith(primaryColor: Color(0xff2C1A1D)),
         child: TextFormField(
+          keyboardType: keyboardType,
+          maxLength: keyboardType == TextInputType.number ? 9 : null,
+          inputFormatters: keyboardType == TextInputType.number
+              ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
+              : null,
+          minLines: 1,
+          maxLines: maxLines,
           onSaved: onSaved,
           obscureText: obscure,
           validator: validator,

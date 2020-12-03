@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'listings.g.dart';
@@ -23,7 +22,7 @@ class Listing {
   String title;
   String description;
   int price;
-  int category;
+  String category;
   int status;
   int quantity;
   int sold;

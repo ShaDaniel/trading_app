@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class BasicPage extends StatefulWidget {
   final Widget child;
   final Widget bottomPanel;
+  final Widget floatingBtn;
 
-  BasicPage({this.child, this.bottomPanel});
+  BasicPage({this.child, this.bottomPanel, this.floatingBtn});
 
   static void switchPage(BuildContext context, StatefulWidget page) {
     Navigator.push(context, MaterialPageRoute(builder: (context) => page));
@@ -47,6 +48,8 @@ class _BasicPageState extends State<BasicPage> {
           ),
         ),
         bottomNavigationBar: widget.bottomPanel,
+        floatingActionButton: widget.floatingBtn,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
