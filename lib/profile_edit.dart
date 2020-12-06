@@ -26,7 +26,11 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
             (BuildContext context, AsyncSnapshot<RegisterResponse> response) {
           if (response.connectionState != ConnectionState.done) {
             print("not done yet");
-            return BasicPage(child: CircularProgressIndicator());
+            return BasicPage(
+                child: Center(
+                    child: CircularProgressIndicator(
+              backgroundColor: Color(0xff2C1A1D),
+            )));
           } else {
             userInfo = response.data;
             return BasicPage(

@@ -15,49 +15,81 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  RegisterResponse userInfo;
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(children: <Widget>[
-      SizedBox(height: 30),
-      Image.asset("lib/pics/profile.png", width: 250, height: 250),
-      Row(
-        children: [
-          Expanded(
-              child: PrimaryTextField(
-            labelText: "Name",
-          )),
-          Expanded(child: PrimaryTextField(labelText: "Surname"))
-        ],
-      ),
-      IntlPhoneField(
-        decoration: InputDecoration(
-          labelText: "Phone number",
-          labelStyle: TextStyle(fontSize: 25, color: Color(0xff2C1A1D)),
-        ),
-        initialCountryCode: "RU",
-      ),
-      PrimaryTextField(
-          labelText: "Address", preIcon: Icons.location_on_outlined),
-      PrimaryTextField(labelText: "About"),
-      SizedBox(height: 15),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          SecondaryButton("Edit profile", (context) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfileEditPage()));
-          }),
-          SizedBox(width: 15),
-          SecondaryButton("Exit", (context) {
-            globals.prefs.remove('flutterLogin');
-            globals.prefs.remove('flutterPassword');
+    return FutureBuilder(
+        future: API().getUserAndProfile(),
+        builder:
+            (BuildContext context, AsyncSnapshot<RegisterResponse> response) {
+          if (response.connectionState != ConnectionState.done) {
+            print("not done yet");
+            return Center(
+                child: CircularProgressIndicator(
+              backgroundColor: Color(0xff2C1A1D),
+            ));
+          } else {
+            userInfo = response.data;
+            return Container(
+                child: Column(children: <Widget>[
+              SizedBox(height: 30),
+              Image.asset("lib/pics/profile.png", width: 250, height: 250),
+              Row(
+                children: [
+                  Expanded(
+                      child: PrimaryTextField(
+                    labelText: "Name",
+                    initialValue: userInfo.profile.full_name,
+                    readOnly: true,
+                  )),
+                  Expanded(
+                      child: PrimaryTextField(
+                    labelText: "Surname",
+                    readOnly: true,
+                  ))
+                ],
+              ),
+              IntlPhoneField(
+                readOnly: true,
+                decoration: InputDecoration(
+                  labelText: "Phone number",
+                  labelStyle: TextStyle(fontSize: 25, color: Color(0xff2C1A1D)),
+                ),
+                initialCountryCode: "RU",
+              ),
+              PrimaryTextField(
+                labelText: "Address",
+                preIcon: Icons.location_on_outlined,
+                readOnly: true,
+              ),
+              PrimaryTextField(
+                labelText: "About",
+                readOnly: true,
+                initialValue: userInfo.profile.about,
+              ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SecondaryButton("Edit profile", (context) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfileEditPage()));
+                  }),
+                  SizedBox(width: 15),
+                  SecondaryButton("Exit", (context) {
+                    globals.prefs.remove('flutterLogin');
+                    globals.prefs.remove('flutterPassword');
 
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => LoginPage()));
-          }),
-        ],
-      ),
-    ]));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
+                  }),
+                ],
+              ),
+            ]));
+          }
+        });
   }
 }
