@@ -25,7 +25,7 @@ class PrimaryTextField extends StatelessWidget {
     this.onSaved,
     this.maxLines = 1,
     this.keyboardType = TextInputType.text,
-    this.initialValue = "",
+    this.initialValue = null,
     this.readOnly = false,
   });
   @override

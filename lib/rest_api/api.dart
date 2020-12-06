@@ -36,8 +36,11 @@ class API {
         },
         body: jsonEncode(request.toJson()));
     print(request.toJson());
-    if (response.statusCode == 201 || response.statusCode == 400)
+    if (response.statusCode == 201) {
+      print(response.body);
       return RegisterResponse.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 400)
+      return null;
     else {
       print(response.statusCode);
       throw Exception("Registration went wrong");

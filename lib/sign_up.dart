@@ -117,15 +117,17 @@ class _SignUpPageState extends State<SignUpPage> {
           textColor: Color(0xff2C1A1D),
           fontSize: 25.0);
       new API().register(registerRequest).then((value) {
-        if (value.uuid.isNotEmpty && value.error.isEmpty) {
-          Fluttertoast.showToast(
-              msg: "Registration successful!",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              backgroundColor: Color(0xffA67F8E),
-              textColor: Color(0xff2C1A1D),
-              fontSize: 25.0);
+        String msg = "Registration successful!";
+        if (value == null) msg = "User already exists";
+        Fluttertoast.showToast(
+            msg: msg,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Color(0xffA67F8E),
+            textColor: Color(0xff2C1A1D),
+            fontSize: 25.0);
 
+        if (value?.email != null && value?.profile != null) {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
         }

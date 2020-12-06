@@ -20,7 +20,6 @@ class RegisterRequest {
 
 @JsonSerializable(explicitToJson: true)
 class RegisterResponse {
-  final String uuid;
   final String email;
   final bool is_email_verified;
   final DateTime date_joined;
@@ -29,8 +28,7 @@ class RegisterResponse {
   final ProfileInfo profile;
 
   RegisterResponse(
-      {this.uuid,
-      this.email,
+      {this.email,
       this.is_email_verified,
       this.date_joined,
       this.balance,

@@ -8,7 +8,6 @@ part of 'register.dart';
 
 RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) {
   return RegisterResponse(
-    uuid: json['uuid'] as String,
     email: json['email'] as String,
     is_email_verified: json['is_email_verified'] as bool,
     date_joined: json['date_joined'] == null
@@ -24,7 +23,6 @@ RegisterResponse _$RegisterResponseFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$RegisterResponseToJson(RegisterResponse instance) =>
     <String, dynamic>{
-      'uuid': instance.uuid,
       'email': instance.email,
       'is_email_verified': instance.is_email_verified,
       'date_joined': instance.date_joined?.toIso8601String(),
