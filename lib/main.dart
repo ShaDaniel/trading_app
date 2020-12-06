@@ -139,6 +139,10 @@ class _LoginPageState extends State<LoginPage> {
           fontSize: 25.0);
       new API().login(loginRequest).then((value) {
         if (value.token.isNotEmpty) {
+          globals.token = "Token " + value.token;
+          loggedIn = true;
+        }
+        if (value.token.isNotEmpty) {
           Fluttertoast.showToast(
               msg: "Login successful!",
               toastLength: Toast.LENGTH_SHORT,
