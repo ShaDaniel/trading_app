@@ -4,6 +4,9 @@ import 'package:login_page/common_elements/buttons.dart';
 import 'package:login_page/main.dart';
 import 'package:login_page/main4screen.dart';
 import 'package:login_page/common_elements/text_fields.dart';
+import 'package:login_page/profile_edit.dart';
+import 'package:login_page/rest_api/api.dart';
+import 'package:login_page/rest_api/register.dart';
 import 'common_elements/globals.dart' as globals;
 
 class ProfilePage extends StatefulWidget {
@@ -17,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Container(
         child: Column(children: <Widget>[
       SizedBox(height: 30),
-      Image.asset("lib/pics/profile.png", width: 320, height: 320),
+      Image.asset("lib/pics/profile.png", width: 250, height: 250),
       Row(
         children: [
           Expanded(
@@ -36,14 +39,25 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       PrimaryTextField(
           labelText: "Address", preIcon: Icons.location_on_outlined),
+      PrimaryTextField(labelText: "About"),
       SizedBox(height: 15),
-      SecondaryButton("Exit", (context) {
-        globals.prefs.remove('flutterLogin');
-        globals.prefs.remove('flutterPassword');
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          SecondaryButton("Edit profile", (context) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfileEditPage()));
+          }),
+          SizedBox(width: 15),
+          SecondaryButton("Exit", (context) {
+            globals.prefs.remove('flutterLogin');
+            globals.prefs.remove('flutterPassword');
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
-      }),
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => LoginPage()));
+          }),
+        ],
+      ),
     ]));
   }
 }

@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:login_page/rest_api/profile.dart';
+
+part 'register.g.dart';
+
 class RegisterRequest {
   String email;
   String password;
@@ -13,6 +18,7 @@ class RegisterRequest {
   }
 }
 
+@JsonSerializable(explicitToJson: true)
 class RegisterResponse {
   final String uuid;
   final String email;
@@ -20,6 +26,7 @@ class RegisterResponse {
   final DateTime date_joined;
   final int balance;
   final String error;
+  final ProfileInfo profile;
 
   RegisterResponse(
       {this.uuid,
@@ -27,15 +34,10 @@ class RegisterResponse {
       this.is_email_verified,
       this.date_joined,
       this.balance,
-      this.error});
+      this.error,
+      this.profile});
 
-  factory RegisterResponse.fromJson(Map<String, dynamic> json) {
-    return RegisterResponse(
-        uuid: json["uuid"] ?? "",
-        email: json["email"] ?? "",
-        is_email_verified: json["is_email_verified"] ?? false,
-        date_joined: DateTime.parse(json["date_joined"]) ?? new DateTime(0),
-        balance: json["balance"] ?? 0,
-        error: json["error"] ?? "");
-  }
+  factory RegisterResponse.fromJson(Map<String, dynamic> json) =>
+      _$RegisterResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$RegisterResponseToJson(this);
 }

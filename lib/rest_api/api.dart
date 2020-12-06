@@ -4,6 +4,7 @@ import 'package:login_page/rest_api/listing_create.dart';
 import 'package:login_page/rest_api/listings.dart';
 import 'package:login_page/rest_api/login.dart';
 import 'package:http/http.dart' as http;
+import 'package:login_page/rest_api/profile.dart';
 import 'package:login_page/rest_api/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:login_page/common_elements/globals.dart' as globals;
@@ -67,6 +68,32 @@ class API {
     else {
       print(response.statusCode);
       throw Exception("Listing create went wrong");
+    }
+  }
+
+  Future<RegisterResponse> getUserAndProfile() async {
+    final response = await http.get(baseUrl + "api/users/",
+        headers: <String, String>{'Authorization': globals.token});
+    if (response.statusCode == 200 || response.statusCode == 400)
+      return RegisterResponse.fromJson(json.decode(response.body));
+    else {
+      print(response.statusCode);
+      throw Exception("Get user and profile went wrong");
+    }
+  }
+
+  Future<ProfileInfo> updateProfile(ProfileInfo request) async {
+    final response = await http.patch(baseUrl + "api/profiles/",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': globals.token
+        },
+        body: jsonEncode(request.toJson()));
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      return ProfileInfo.fromJson(json.decode(response.body));
+    } else {
+      print(response.statusCode);
+      throw Exception("Profile update went wrong");
     }
   }
 }

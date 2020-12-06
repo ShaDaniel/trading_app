@@ -11,6 +11,7 @@ class PrimaryTextField extends StatelessWidget {
   final Function onSaved;
   final int maxLines;
   final TextInputType keyboardType;
+  final String initialValue;
 
   PrimaryTextField({
     Key key,
@@ -23,12 +24,14 @@ class PrimaryTextField extends StatelessWidget {
     this.onSaved,
     this.maxLines = 1,
     this.keyboardType = TextInputType.text,
+    this.initialValue = "",
   });
   @override
   Widget build(BuildContext context) {
     return Theme(
         data: Theme.of(context).copyWith(primaryColor: Color(0xff2C1A1D)),
         child: TextFormField(
+          initialValue: initialValue,
           keyboardType: keyboardType,
           maxLength: keyboardType == TextInputType.number ? 9 : null,
           inputFormatters: keyboardType == TextInputType.number
