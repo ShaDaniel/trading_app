@@ -4,86 +4,153 @@ import 'package:login_page/main4screen.dart';
 import 'package:login_page/page_templates.dart';
 import 'package:login_page/rest_api/api.dart';
 import 'package:login_page/rest_api/listing_create.dart';
+import 'package:login_page/rest_api/nested_object.dart';
 
 import 'common_elements/buttons.dart';
 import 'common_elements/text_fields.dart';
 
 class AddListing extends StatelessWidget {
   final _formKey = new GlobalKey<FormState>();
+  final _categoryController = new TextEditingController();
   final ListingRequest request = new ListingRequest();
+  Map<String, dynamic> jsonCategories;
+  NestedObject categories;
 
   @override
   Widget build(BuildContext context) {
-    return BasicPage(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 25,
-          ),
-          Container(
-            child: SecondaryButton("Back", (context) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => MainScreens()));
-            }, Icons.arrow_back_outlined),
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.only(left: 10),
-          ),
-          Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                PrimaryTextField(
-                  onSaved: (value) => request.title = value,
-                  validator: (value) => (value as String).isEmpty
-                      ? "The field is necessary"
-                      : null,
-                  labelText: "Title",
-                ),
-                PrimaryTextField(
-                  onSaved: (value) => request.description = value,
-                  labelText: "Description",
-                  maxLines: 8,
-                ),
-                PrimaryTextField(
-                  onSaved: (value) => request.category = value,
-                  validator: (value) => (value as String).isEmpty
-                      ? "The field is necessary"
-                      : null,
-                  labelText: "Category",
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: PrimaryTextField(
-                        onSaved: (value) => request.price = int.parse(value),
-                        validator: (value) => (value as String).isEmpty
-                            ? "The field is necessary"
-                            : null,
-                        labelText: "Price",
-                        postIcon: Icon(Icons.attach_money),
-                        keyboardType: TextInputType.number,
-                      ),
+    return FutureBuilder(
+        future: API().getCategoriesGoods(),
+        builder: (BuildContext context,
+            AsyncSnapshot<Map<String, dynamic>> response) {
+          if (response.connectionState != ConnectionState.done) {
+            print("not done yet");
+            return BasicPage(
+                child: Center(
+                    child: CircularProgressIndicator(
+              backgroundColor: Color(0xff2C1A1D),
+            )));
+          } else {
+            jsonCategories = response.data;
+            categories = NestedObject(name: "categories")
+                .fromJson(jsonCategories["categories"]);
+
+            return BasicPage(
+                child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Container(
+                    child: SecondaryButton("Back", (context) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MainScreens()));
+                    }, Icons.arrow_back_outlined),
+                    alignment: Alignment.topLeft,
+                    padding: EdgeInsets.only(left: 10),
+                  ),
+                  Container(
+                    height: 450,
+                    child: ListView.builder(
+                        itemCount: categories.objects.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            _buildCategories(categories.objects[index])),
+                  ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        PrimaryTextField(
+                          controller: _categoryController,
+                          onSaved: (value) => request.category = value,
+                          readOnly: true,
+                          validator: (value) => (value as String).isEmpty
+                              ? "The field is necessary"
+                              : null,
+                          labelText: "Category",
+                        ),
+                        PrimaryTextField(
+                          onSaved: (value) => request.title = value,
+                          validator: (value) => (value as String).isEmpty
+                              ? "The field is necessary"
+                              : null,
+                          labelText: "Title",
+                        ),
+                        PrimaryTextField(
+                          onSaved: (value) => request.description = value,
+                          labelText: "Description",
+                          maxLines: 8,
+                        ),
+                        /*PrimaryTextField(
+                          onSaved: (value) => request.category = value,
+                          validator: (value) => (value as String).isEmpty
+                              ? "The field is necessary"
+                              : null,
+                          labelText: "Category",
+                        ),*/
+                        //_buildCategories(categories),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: PrimaryTextField(
+                                onSaved: (value) =>
+                                    request.price = int.parse(value),
+                                validator: (value) => (value as String).isEmpty
+                                    ? "The field is necessary"
+                                    : null,
+                                labelText: "Price",
+                                postIcon: Icon(Icons.attach_money),
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                            Expanded(
+                              child: PrimaryTextField(
+                                onSaved: (value) => request.quantity =
+                                    (value as String).isNotEmpty
+                                        ? int.parse(value)
+                                        : 0,
+                                labelText: "Quantity",
+                                keyboardType: TextInputType.number,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        PrimaryButton(
+                            "Create listing", listingCreate, [context]),
+                        SizedBox(
+                          height: 25,
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      child: PrimaryTextField(
-                        onSaved: (value) => request.quantity =
-                            (value as String).isNotEmpty ? int.parse(value) : 0,
-                        labelText: "Quantity",
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                PrimaryButton("Create listing", listingCreate, [context])
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+                  )
+                ],
+              ),
+            ));
+          }
+        });
+  }
+
+  Widget _buildCategories(NestedObject obj) {
+    if (obj.objects.isEmpty)
+      return ListTile(
+        onTap: () {
+          _categoryController.text = obj.name;
+        },
+        title: Text(obj.name),
+      );
+    else {
+      return ExpansionTile(
+        backgroundColor: Colors.pink,
+        key: PageStorageKey<NestedObject>(obj),
+        title: Text(obj.name),
+        children: obj.objects.map(_buildCategories).toList(),
+      );
+    }
   }
 
   void listingCreate(BuildContext context) {

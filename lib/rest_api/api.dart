@@ -51,7 +51,8 @@ class API {
     final page = "?page=$pageNum";
     final response = await http.get(baseUrl + "api/listings/" + page);
     if (response.statusCode == 200 || response.statusCode == 404)
-      return ListingsResponse.fromJson(json.decode(response.body));
+      return ListingsResponse.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)));
     else {
       print(response.statusCode);
       throw Exception("Listings get went wrong");
@@ -98,5 +99,13 @@ class API {
       print(response.statusCode);
       throw Exception("Profile update went wrong");
     }
+  }
+
+  Future<Map<String, dynamic>> getCategoriesGoods() async {
+    final response = await http.get(baseUrl + "api/info/");
+    if (response.statusCode == 200)
+      return json.decode(utf8.decode(response.bodyBytes));
+    else
+      throw Exception("Categories goods fetch went wrong");
   }
 }

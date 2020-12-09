@@ -31,8 +31,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ));
           } else {
             userInfo = response.data;
-            return Container(
-                child: Column(children: <Widget>[
+            return SingleChildScrollView(
+                child: Container(
+                    child: Column(children: <Widget>[
               SizedBox(height: 30),
               Image.asset("lib/pics/profile.png", width: 250, height: 250),
               Row(
@@ -88,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   }),
                 ],
               ),
-            ]));
+            ])));
           }
         });
   }

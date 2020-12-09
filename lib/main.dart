@@ -11,6 +11,7 @@ import 'package:login_page/sign_up.dart';
 import 'package:login_page/common_elements/text_fields.dart';
 import 'common_elements/buttons.dart';
 import 'common_elements/globals.dart' as globals;
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> initCache() async {
   var prefs = globals.prefs = await globals.sharedPreferencesTask;
