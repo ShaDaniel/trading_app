@@ -79,7 +79,8 @@ class API {
     final response = await http.get(baseUrl + "api/users/",
         headers: <String, String>{'Authorization': globals.token});
     if (response.statusCode == 200 || response.statusCode == 400)
-      return RegisterResponse.fromJson(json.decode(response.body));
+      return RegisterResponse.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)));
     else {
       print(response.statusCode);
       throw Exception("Get user and profile went wrong");
