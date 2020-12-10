@@ -16,7 +16,7 @@ class ListingPallet extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
           child: Image.asset(
-            "lib/pics/1.png", // потом будет listing.photo[0]
+            "lib/pics/no_image.png", // потом будет listing.photo[0]
             width: 200,
             height: 200,
             fit: BoxFit.fill,
@@ -76,11 +76,21 @@ class _FeedListState extends State<FeedList> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ListingPallet(listing: _listings[i * 2]),
-                  ListingPallet(
-                      listing: i * 2 + 1 >= _listings.length
-                          ? null
-                          : _listings[i * 2 + 1]),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListingPallet(listing: _listings[i * 2]),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListingPallet(
+                          listing: i * 2 + 1 >= _listings.length
+                              ? null
+                              : _listings[i * 2 + 1]),
+                    ),
+                  ),
                 ],
               ));
         });
