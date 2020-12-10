@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:login_page/common_elements/text_elements.dart';
 import 'package:login_page/rest_api/listings.dart';
 
 import 'rest_api/api.dart';
+
+enum Filters {
+  PersonUuid,
+}
 
 class ListingPallet extends StatelessWidget {
   final Listing listing;
@@ -30,6 +35,13 @@ class ListingPallet extends StatelessWidget {
 }
 
 class FeedList extends StatefulWidget {
+  final String filter;
+  final int filterCode;
+  const FeedList({
+    Key key,
+    this.filter = null,
+    this.filterCode = null,
+  }) : super(key: key);
   @override
   _FeedListState createState() => _FeedListState();
 }
@@ -49,12 +61,33 @@ class _FeedListState extends State<FeedList> {
         if (value != null) {
           if (value.count == null) return;
           if (value.count == 10) page++;
-          // если в прошлый раз были получены не все 10 элементов, перезатираем
-          _listings.removeRange(_listings.length - res, _listings.length);
-          _listings.addAll(value.results);
-          res = value.results.length % 10;
+          // особые объявления по фильтру
+          if (widget.filter != null) {
+            if (value.count < 10) {
+              _listings.removeRange(_listings.length - res, _listings.length);
+              // реализовать switch функцию отбора по фильтру
+              value.results = value.results
+                  .where((element) => element.seller.uuid == widget.filter)
+                  .toList();
+              _listings.addAll(value.results);
+              res = value.results.length;
+            } else {
+              _listings.removeRange(_listings.length - res, _listings.length);
+              value.results = value.results
+                  .where((element) => element.seller.uuid == widget.filter)
+                  .toList();
+              _listings.addAll(value.results);
+              res = 0;
+            }
+          } else {
+            // если в прошлый раз были получены не все 10 элементов, перезатираем
+            _listings.removeRange(_listings.length - res, _listings.length);
+            _listings.addAll(value.results);
+            res = value.results.length % 10;
+          }
           fetching = false;
         }
+        print(widget.filter);
       });
     });
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:login_page/common_elements/buttons.dart';
+import 'package:login_page/feed.dart';
 import 'package:login_page/main.dart';
 import 'package:login_page/main4screen.dart';
 import 'package:login_page/common_elements/text_fields.dart';
@@ -89,6 +90,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   }),
                 ],
               ),
+              SizedBox(height: 15),
+              Container(
+                  height: 450,
+                  child: FeedList(
+                      filter: userInfo.profile.uuid,
+                      filterCode: Filters.PersonUuid.index)),
+              SizedBox(height: 15),
             ])));
           }
         });
