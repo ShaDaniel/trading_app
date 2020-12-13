@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:login_page/common_elements/text_elements.dart';
+import 'package:login_page/listing_view.dart';
 import 'package:login_page/rest_api/listings.dart';
 
 import 'rest_api/api.dart';
@@ -16,21 +17,29 @@ class ListingPallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (listing == null) return Container(width: 200);
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Expanded(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: Image.asset(
-            "lib/pics/no_image.png", // потом будет listing.photo[0]
-            width: 200,
-            height: 200,
-            fit: BoxFit.fill,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ListingViewScreen(listingInfo: listing)));
+      },
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.asset(
+              "lib/pics/no_image.png", // потом будет listing.photo[0]
+              width: 200,
+              height: 200,
+              fit: BoxFit.fill,
+            ),
           ),
         ),
-      ),
-      TextSecondary(text: listing.title, bold: true),
-      TextSecondary(text: "\$${listing.price.toString()}"),
-    ]);
+        TextSecondary(text: listing.title, bold: true),
+        TextSecondary(text: "\$${listing.price.toString()}"),
+      ]),
+    );
   }
 }
 
