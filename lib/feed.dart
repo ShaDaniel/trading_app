@@ -69,10 +69,10 @@ class _FeedListState extends State<FeedList> {
         // если есть очередные объявления, добавляем в кэш
         if (value != null) {
           if (value.count == null) return;
-          if (value.count == 10) page++;
+          if (value.results.length == 10) page++;
           // особые объявления по фильтру
           if (widget.filter != null) {
-            if (value.count < 10) {
+            if (value.results.length < 10) {
               _listings.removeRange(_listings.length - res, _listings.length);
               // реализовать switch функцию отбора по фильтру
               value.results = value.results
