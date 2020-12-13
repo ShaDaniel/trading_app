@@ -29,6 +29,7 @@ class _BasicPageState extends State<BasicPage> {
         resizeToAvoidBottomInset: false,
         resizeToAvoidBottomPadding: false,
         body: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
           controller: ScrollController(
             initialScrollOffset: MediaQuery.of(context).size.height,
             keepScrollOffset: true,

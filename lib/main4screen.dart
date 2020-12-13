@@ -25,7 +25,7 @@ class _MainScreensState extends State<MainScreens> {
         ),
         bottomPanel: Theme(
           data: Theme.of(context).copyWith(
-              canvasColor: Color(0xffA67F8E),
+              canvasColor: Colors.blue,
               textTheme: Theme.of(context)
                   .textTheme
                   .copyWith(caption: new TextStyle(color: Color(0xff2C1A1D)))),

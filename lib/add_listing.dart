@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:login_page/listing_choose_category.dart';
 import 'package:login_page/main4screen.dart';
 import 'package:login_page/page_templates.dart';
 import 'package:login_page/rest_api/api.dart';
@@ -11,10 +12,12 @@ import 'common_elements/text_fields.dart';
 
 class AddListing extends StatelessWidget {
   final _formKey = new GlobalKey<FormState>();
-  final _categoryController = new TextEditingController();
   final ListingRequest request = new ListingRequest();
   Map<String, dynamic> jsonCategories;
   NestedObject categories;
+  String chosenCategory;
+
+  AddListing({this.chosenCategory = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,8 @@ class AddListing extends StatelessWidget {
           } else {
             jsonCategories = response.data;
             categories = NestedObject(name: "categories")
-                .fromJson(jsonCategories["categories"]);
+                .fromJson(jsonCategories)
+                .objects[0];
 
             return BasicPage(
                 child: SingleChildScrollView(
@@ -51,19 +55,19 @@ class AddListing extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     padding: EdgeInsets.only(left: 10),
                   ),
-                  Container(
-                    height: 450,
-                    child: ListView.builder(
-                        itemCount: categories.objects.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            _buildCategories(categories.objects[index])),
-                  ),
                   Form(
                     key: _formKey,
                     child: Column(
                       children: [
                         PrimaryTextField(
-                          controller: _categoryController,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ChooseCategoryScreen(
+                                        nestedCategory: categories)));
+                          },
+                          initialValue: chosenCategory,
                           onSaved: (value) => request.category = value,
                           readOnly: true,
                           validator: (value) => (value as String).isEmpty
@@ -133,24 +137,6 @@ class AddListing extends StatelessWidget {
             ));
           }
         });
-  }
-
-  Widget _buildCategories(NestedObject obj) {
-    if (obj.objects.isEmpty)
-      return ListTile(
-        onTap: () {
-          _categoryController.text = obj.name;
-        },
-        title: Text(obj.name),
-      );
-    else {
-      return ExpansionTile(
-        backgroundColor: Colors.pink,
-        key: PageStorageKey<NestedObject>(obj),
-        title: Text(obj.name),
-        children: obj.objects.map(_buildCategories).toList(),
-      );
-    }
   }
 
   void listingCreate(BuildContext context) {

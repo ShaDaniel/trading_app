@@ -13,26 +13,28 @@ class PrimaryTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final String initialValue;
   final bool readOnly;
+  final Function onTap;
 
-  PrimaryTextField({
-    Key key,
-    this.labelText,
-    this.preIcon,
-    this.postIcon,
-    this.obscure = false,
-    this.validator,
-    this.controller,
-    this.onSaved,
-    this.maxLines = 1,
-    this.keyboardType = TextInputType.text,
-    this.initialValue = null,
-    this.readOnly = false,
-  });
+  PrimaryTextField(
+      {Key key,
+      this.labelText,
+      this.preIcon,
+      this.postIcon,
+      this.obscure = false,
+      this.validator,
+      this.controller,
+      this.onSaved,
+      this.maxLines = 1,
+      this.keyboardType = TextInputType.text,
+      this.initialValue = null,
+      this.readOnly = false,
+      this.onTap});
   @override
   Widget build(BuildContext context) {
     return Theme(
         data: Theme.of(context).copyWith(primaryColor: Color(0xff2C1A1D)),
         child: TextFormField(
+          onTap: onTap,
           readOnly: readOnly,
           initialValue: initialValue,
           keyboardType: keyboardType,
