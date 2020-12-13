@@ -36,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Container(
                     child: Column(children: <Widget>[
               SizedBox(height: 30),
-              Image.asset("lib/pics/profile.png", width: 250, height: 250),
+              Image.asset("lib/pics/profile.png", width: 200, height: 200),
               Row(
                 children: [
                   Expanded(
