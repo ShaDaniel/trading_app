@@ -10,7 +10,7 @@ class MainScreens extends StatefulWidget {
 }
 
 class _MainScreensState extends State<MainScreens> {
-  final pages = <Widget>[ProfilePage(), Container(), Container(), FeedList()];
+  final pages = <Widget>[FeedList(), ProfilePage(), Container(), Container()];
   int _curIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,8 @@ class _MainScreensState extends State<MainScreens> {
         floatingBtn: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => AddListing()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CreateUpdateListing()));
           },
         ),
         bottomPanel: Theme(
@@ -38,13 +38,13 @@ class _MainScreensState extends State<MainScreens> {
             currentIndex: _curIndex,
             items: [
               BottomNavigationBarItem(
+                  icon: Icon(Icons.all_inclusive_sharp), label: "feed"),
+              BottomNavigationBarItem(
                   icon: Icon(Icons.person_outline), label: "profile"),
               BottomNavigationBarItem(
                   icon: Icon(Icons.search), label: "search"),
               BottomNavigationBarItem(
                   icon: Icon(Icons.mail_outline), label: "messages"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.all_inclusive_sharp), label: "feed"),
             ],
             selectedItemColor: Color(0xff2C1A1D),
             unselectedItemColor: Color(0xff6C534E),

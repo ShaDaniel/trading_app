@@ -68,10 +68,26 @@ class API {
         body: jsonEncode(request.toJson()));
     print(response.body); //debug
     if (response.statusCode == 201 || response.statusCode == 400)
-      return Listing.fromJson(json.decode(response.body));
+      return Listing.fromJson(json.decode(utf8.decode(response.bodyBytes)));
     else {
       print(response.statusCode);
       throw Exception("Listing create went wrong");
+    }
+  }
+
+  Future<Listing> listingUpdate(ListingRequest request, String uuid) async {
+    final response = await http.patch(baseUrl + "api/listings/$uuid/",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': globals.token
+        },
+        body: jsonEncode(request.toJson()));
+    print(response.body); //debug
+    if (response.statusCode == 200 || response.statusCode == 400)
+      return Listing.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+    else {
+      print(response.statusCode);
+      throw Exception("Listing update went wrong");
     }
   }
 

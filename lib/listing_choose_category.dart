@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:login_page/add_listing.dart';
 import 'package:login_page/page_templates.dart';
+import 'package:login_page/rest_api/listings.dart';
 import 'package:login_page/rest_api/nested_object.dart';
 
 class ChooseCategoryScreen extends StatelessWidget {
   NestedObject nestedCategory;
+  Listing updatingListing;
 
-  ChooseCategoryScreen({this.nestedCategory});
+  ChooseCategoryScreen({this.nestedCategory, this.updatingListing});
 
   List<Widget> _buildCategories(BuildContext context) {
     List<Widget> categories = new List<Widget>();
@@ -19,16 +22,19 @@ class ChooseCategoryScreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AddListing(
+                          builder: (context) => CreateUpdateListing(
                                 chosenCategory: category.name,
+                                updatingListing: updatingListing,
                               )));
                 }
               : () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              ChooseCategoryScreen(nestedCategory: category)));
+                          builder: (context) => ChooseCategoryScreen(
+                                nestedCategory: category,
+                                updatingListing: updatingListing,
+                              )));
                 }));
     }
     return categories;

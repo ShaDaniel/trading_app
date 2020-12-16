@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:login_page/add_listing.dart';
 import 'package:login_page/common_elements/buttons.dart';
 import 'package:login_page/common_elements/text_elements.dart';
+import 'package:login_page/main4screen.dart';
 import 'package:login_page/page_templates.dart';
 import 'package:login_page/rest_api/listings.dart';
+import 'common_elements/globals.dart' as globals;
 
 class ListingViewScreen extends StatelessWidget {
   Listing listingInfo;
@@ -20,12 +23,35 @@ class ListingViewScreen extends StatelessWidget {
             SizedBox(
               height: 25,
             ),
-            Container(
-              child: SecondaryButton("Back", (context) {
-                Navigator.pop(context);
-              }, Icons.arrow_back_outlined),
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(left: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: SecondaryButton("Back", (context) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MainScreens()));
+                  }, Icons.arrow_back_outlined),
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.only(left: 10),
+                ),
+                globals.userInfo.profile.uuid == listingInfo.seller.uuid
+                    ? Container(
+                        child: SecondaryButton(
+                          "Edit",
+                          (context) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreateUpdateListing(
+                                          updatingListing: listingInfo,
+                                        )));
+                          },
+                        ),
+                        alignment: Alignment.topLeft,
+                        padding: EdgeInsets.only(right: 10),
+                      )
+                    : Container(),
+              ],
             ),
             SizedBox(
               height: 25,
