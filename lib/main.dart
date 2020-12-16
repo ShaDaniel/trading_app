@@ -146,6 +146,7 @@ class _LoginPageState extends State<LoginPage> {
         if (value.token.isNotEmpty) {
           globals.token = "Token " + value.token;
           loggedIn = true;
+          initBasicInfo();
         }
         if (value.token.isNotEmpty) {
           Fluttertoast.showToast(

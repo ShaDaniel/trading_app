@@ -109,7 +109,9 @@ class CreateUpdateListing extends StatelessWidget {
                           children: [
                             Expanded(
                               child: PrimaryTextField(
-                                initialValue: updatingListing?.price.toString(),
+                                initialValue: updatingListing?.quantity != null
+                                    ? updatingListing.quantity.toString()
+                                    : "",
                                 onSaved: (value) =>
                                     request.price = int.parse(value),
                                 validator: (value) => (value as String).isEmpty
@@ -122,8 +124,9 @@ class CreateUpdateListing extends StatelessWidget {
                             ),
                             Expanded(
                               child: PrimaryTextField(
-                                initialValue:
-                                    updatingListing?.quantity.toString(),
+                                initialValue: updatingListing?.quantity != null
+                                    ? updatingListing.quantity.toString()
+                                    : "",
                                 onSaved: (value) => request.quantity =
                                     (value as String).isNotEmpty
                                         ? int.parse(value)
