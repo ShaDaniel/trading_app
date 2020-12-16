@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:login_page/add_listing.dart';
+import 'package:login_page/common_elements/buttons.dart';
 import 'package:login_page/page_templates.dart';
 import 'package:login_page/rest_api/listings.dart';
 import 'package:login_page/rest_api/nested_object.dart';
@@ -44,10 +45,23 @@ class ChooseCategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasicPage(
       child: SingleChildScrollView(
-        child: Column(
-          children: _buildCategories(context),
-        ),
-      ),
+          child: Column(
+        children: [
+          SizedBox(
+            height: 25,
+          ),
+          Container(
+            child: SecondaryButton("Back", (context) {
+              Navigator.pop(context);
+            }, Icons.arrow_back_outlined),
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.only(left: 10),
+          ),
+          Column(
+            children: _buildCategories(context),
+          ),
+        ],
+      )),
     );
   }
 }
