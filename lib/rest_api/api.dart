@@ -78,10 +78,11 @@ class API {
   Future<RegisterResponse> getUserAndProfile() async {
     final response = await http.get(baseUrl + "api/users/",
         headers: <String, String>{'Authorization': globals.token});
-    if (response.statusCode == 200 || response.statusCode == 400)
-      return RegisterResponse.fromJson(
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      globals.userInfo = RegisterResponse.fromJson(
           json.decode(utf8.decode(response.bodyBytes)));
-    else {
+      return globals.userInfo;
+    } else {
       print(response.statusCode);
       throw Exception("Get user and profile went wrong");
     }

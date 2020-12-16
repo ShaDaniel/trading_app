@@ -27,10 +27,14 @@ Future<void> initCache() async {
   }
 }
 
+Future<void> initBasicInfo() async {
+  globals.userInfo = await API().getUserAndProfile();
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initCache();
-
+  await initBasicInfo();
   runApp(MyApp());
 }
 

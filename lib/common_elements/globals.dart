@@ -1,5 +1,6 @@
 library login_page.globals;
 
+import 'package:login_page/rest_api/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<SharedPreferences> sharedPreferencesTask =
@@ -7,3 +8,4 @@ Future<SharedPreferences> sharedPreferencesTask =
 SharedPreferences prefs;
 bool loggedIn = false;
 String token = null;
+RegisterResponse userInfo;
