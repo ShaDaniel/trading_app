@@ -24,6 +24,8 @@ Future<void> initCache() async {
       globals.token = "Token " + response.token;
       loggedIn = true;
     }
+
+    await initBasicInfo();
   }
 }
 
@@ -34,7 +36,6 @@ Future<void> initBasicInfo() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initCache();
-  await initBasicInfo();
   runApp(MyApp());
 }
 
