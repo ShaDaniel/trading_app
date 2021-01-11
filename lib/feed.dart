@@ -97,6 +97,7 @@ class _FeedListState extends State<FeedList> {
           fetching = false;
         }
         print(widget.filter);
+        print("***");
       });
     });
   }
@@ -110,6 +111,8 @@ class _FeedListState extends State<FeedList> {
           if ((i + 1) * 2 >= _listings.length) {
             // локер для разных потоков
             if (!fetching) {
+              print(i);
+              print(_listings.length);
               _loadMoreListings();
             }
           }
@@ -142,7 +145,7 @@ class _FeedListState extends State<FeedList> {
   void initState() {
     // при загрузке страницы получаем первую порцию объявлений
     super.initState();
-    _loadMoreListings();
+    if (_listings?.isEmpty) _loadMoreListings();
   }
 
   @override

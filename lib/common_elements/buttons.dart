@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'colors.dart' as colors;
 
 class PrimaryButton extends StatelessWidget {
   final String _text;
@@ -17,9 +18,9 @@ class PrimaryButton extends StatelessWidget {
           onPressed: () => Function.apply(_func, _funcArgs, {}),
           child: Text(
             _text,
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(fontSize: 25, color: colors.btnText),
           ),
-          color: Color(0xffA67F8E),
+          color: colors.btnBckgr,
         ));
   }
 }
@@ -39,8 +40,8 @@ class SecondaryButton extends StatelessWidget {
         size: _icon == null ? 0 : 15,
       ),
       onPressed: () => _func(context),
-      label: Text(_text),
-      color: Color(0xffA67F8E).withOpacity(0.5),
+      label: Text(_text, style: TextStyle(color: colors.btnText)),
+      color: colors.btnBckgr,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular((10))),
     );
   }

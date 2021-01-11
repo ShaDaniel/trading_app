@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'common_elements/colors.dart' as colors;
 
 class BasicPage extends StatefulWidget {
   final Widget child;
@@ -43,7 +44,7 @@ class _BasicPageState extends State<BasicPage> {
                 gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [Color(0xffDBB3B1), Color(0xffC89FA3)],
+              colors: [colors.appBckgr1, colors.appBckgr2],
             )),
             child: widget.child,
           ),

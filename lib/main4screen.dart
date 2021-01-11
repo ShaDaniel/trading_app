@@ -3,6 +3,7 @@ import 'package:login_page/add_listing.dart';
 import 'package:login_page/feed.dart';
 import 'package:login_page/page_templates.dart';
 import 'package:login_page/profile_space.dart';
+import 'common_elements/colors.dart' as colors;
 
 class MainScreens extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _MainScreensState extends State<MainScreens> {
         child: pages[_curIndex],
         floatingBtn: FloatingActionButton(
           child: Icon(Icons.add),
+          backgroundColor: colors.btnPlus,
           onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => CreateUpdateListing()));
@@ -25,10 +27,8 @@ class _MainScreensState extends State<MainScreens> {
         ),
         bottomPanel: Theme(
           data: Theme.of(context).copyWith(
-              canvasColor: Colors.blue,
-              textTheme: Theme.of(context)
-                  .textTheme
-                  .copyWith(caption: new TextStyle(color: Color(0xff2C1A1D)))),
+            canvasColor: Colors.blue,
+          ),
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             onTap: (index) {

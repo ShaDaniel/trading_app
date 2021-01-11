@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:login_page/common_elements/fluttertoast.dart';
 import 'package:login_page/common_elements/globals.dart';
 import 'package:login_page/common_elements/text_elements.dart';
 import 'package:login_page/logout_page.dart';
@@ -11,6 +11,7 @@ import 'package:login_page/sign_up.dart';
 import 'package:login_page/common_elements/text_fields.dart';
 import 'common_elements/buttons.dart';
 import 'common_elements/globals.dart' as globals;
+import 'common_elements/colors.dart' as colors;
 
 Future<void> initCache() async {
   var prefs = globals.prefs = await globals.sharedPreferencesTask;
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          accentColor: Color(0xffDBB3B1),
+          accentColor: colors.accent,
           fontFamily: 'Lato',
         ),
         home: loggedIn ? MainScreens() : LoginPage(),
@@ -135,13 +136,9 @@ class _LoginPageState extends State<LoginPage> {
   void successfulLogin() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      Fluttertoast.showToast(
-          msg: "Processing...",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          backgroundColor: Color(0xffA67F8E),
-          textColor: Color(0xff2C1A1D),
-          fontSize: 25.0);
+
+      showToast("Processing...");
+
       new API().login(loginRequest).then((value) {
         if (value.token.isNotEmpty) {
           globals.token = "Token " + value.token;
@@ -149,13 +146,7 @@ class _LoginPageState extends State<LoginPage> {
           initBasicInfo();
         }
         if (value.token.isNotEmpty) {
-          Fluttertoast.showToast(
-              msg: "Login successful!",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER,
-              backgroundColor: Color(0xffA67F8E),
-              textColor: Color(0xff2C1A1D),
-              fontSize: 25.0);
+          showToast("Login successful!");
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MainScreens()));
         }

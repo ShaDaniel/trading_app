@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'colors.dart' as colors;
 
 class TextPrimary extends StatelessWidget {
   final String text;
@@ -9,7 +10,7 @@ class TextPrimary extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          fontSize: 50, color: Color(0xff2C1A1D), fontWeight: FontWeight.bold),
+          fontSize: 50, color: colors.textMain, fontWeight: FontWeight.bold),
     );
   }
 }
@@ -23,7 +24,7 @@ class TextSesquialteral extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-          fontSize: 35, color: Color(0xff2C1A1D), fontWeight: FontWeight.bold),
+          fontSize: 35, color: colors.textMain, fontWeight: FontWeight.bold),
     );
   }
 }
@@ -39,7 +40,7 @@ class TextSecondary extends StatelessWidget {
       text,
       style: TextStyle(
           fontSize: 20,
-          color: Color(0xff2C1A1D),
+          color: colors.textScndry,
           fontWeight: bold ? FontWeight.normal : FontWeight.bold),
     );
   }

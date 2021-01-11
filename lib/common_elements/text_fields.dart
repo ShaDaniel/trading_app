@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'colors.dart' as colors;
 
 class PrimaryTextField extends StatelessWidget {
   final String labelText;
@@ -32,7 +33,7 @@ class PrimaryTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-        data: Theme.of(context).copyWith(primaryColor: Color(0xff2C1A1D)),
+        data: Theme.of(context).copyWith(primaryColor: colors.textScndry),
         child: TextFormField(
           onTap: onTap,
           readOnly: readOnly,
@@ -52,9 +53,9 @@ class PrimaryTextField extends StatelessWidget {
               labelText: labelText,
               prefixIcon: Icon(preIcon),
               suffixIcon: postIcon,
-              labelStyle: TextStyle(fontSize: 25, color: Color(0xff2C1A1D)),
+              labelStyle: TextStyle(fontSize: 25, color: colors.textScndry),
               focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xff2C1A1D)))),
+                  borderSide: BorderSide(color: colors.textScndry))),
           style: TextStyle(fontSize: 20),
         ));
   }
