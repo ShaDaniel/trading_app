@@ -12,6 +12,8 @@ import 'package:login_page/common_elements/text_fields.dart';
 import 'common_elements/buttons.dart';
 import 'common_elements/globals.dart' as globals;
 import 'common_elements/colors.dart' as colors;
+import 'package:location/location.dart' as location;
+import 'package:geocoding/geocoding.dart';
 
 Future<void> initCache() async {
   var prefs = globals.prefs = await globals.sharedPreferencesTask;
@@ -34,9 +36,48 @@ Future<void> initBasicInfo() async {
   globals.userInfo = await API().getUserAndProfile();
 }
 
+Future getUserLocation() async {
+  location.Location loc = location.Location();
+  location.LocationData currentLocation;
+  bool _serviceEnabled;
+  location.PermissionStatus _permissionGranted;
+
+  _serviceEnabled = await loc.serviceEnabled();
+  if (!_serviceEnabled) {
+    _serviceEnabled = await loc.requestService();
+    if (!_serviceEnabled) {
+      return;
+    }
+  }
+
+  _permissionGranted = await loc.hasPermission();
+  if (_permissionGranted == location.PermissionStatus.denied) {
+    _permissionGranted = await loc.requestPermission();
+    if (_permissionGranted != location.PermissionStatus.granted) {
+      return;
+    }
+  }
+  try {
+    currentLocation = await loc.getLocation();
+    print(currentLocation.latitude);
+    print(currentLocation.longitude);
+  } catch (e) {
+    print(e);
+    currentLocation = null;
+  }
+  globals.userLocation = currentLocation;
+  if (currentLocation != null) getAddressFromCoords(currentLocation);
+}
+
+void getAddressFromCoords(location.LocationData coords) async {
+  var address = await new API().getAddressFromCoords(coords);
+  globals.userLocationAddress = address;
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initCache();
+  await getUserLocation();
   runApp(MyApp());
 }
 

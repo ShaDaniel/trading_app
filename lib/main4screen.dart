@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:login_page/add_listing.dart';
+import 'package:login_page/common_elements/text_elements.dart';
 import 'package:login_page/feed.dart';
 import 'package:login_page/page_templates.dart';
 import 'package:login_page/profile_space.dart';
 import 'common_elements/colors.dart' as colors;
+import 'common_elements/globals.dart' as globals;
 
 class MainScreens extends StatefulWidget {
   @override
@@ -16,6 +18,12 @@ class _MainScreensState extends State<MainScreens> {
   @override
   Widget build(BuildContext context) {
     return BasicPage(
+        appBar: _curIndex == 0
+            ? AppBar(
+                leading: Icon(Icons.menu),
+                title: TextSecondary(text: globals.userLocationAddress ?? ""),
+              )
+            : null,
         child: pages[_curIndex],
         floatingBtn: FloatingActionButton(
           child: Icon(Icons.add),

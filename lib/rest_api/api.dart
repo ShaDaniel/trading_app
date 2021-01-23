@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:location/location.dart';
 import 'package:login_page/rest_api/listing_create.dart';
 import 'package:login_page/rest_api/listings.dart';
 import 'package:login_page/rest_api/login.dart';
@@ -11,6 +12,7 @@ import 'package:login_page/common_elements/globals.dart' as globals;
 
 class API {
   String baseUrl = "http://45.9.190.78:7777/";
+
   Future<LoginResponse> login(LoginRequest request) async {
     final sharedPrefsTask = SharedPreferences.getInstance();
     final response =
@@ -27,6 +29,30 @@ class API {
       return LoginResponse.fromJson(json.decode(response.body));
     } else
       throw Exception("Login went wrong");
+  }
+
+  Future<String> getAddressFromCoords(LocationData coords) async {
+    var apiKey = "8MR1Km-kluRtgoCtuiCOEnSqI5WAhGVpbaMc0o5xEf4";
+    var url =
+        "https://revgeocode.search.hereapi.com/v1/revgeocode?at=${coords.latitude},${coords.longitude}&lang=ru-RU&apiKey=${apiKey}";
+    print(url);
+
+    final response = await http.get(url);
+    var info = json.decode(utf8.decode(response.bodyBytes));
+    print(info);
+
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      return "${info["items"][0]["address"]["city"]}" == "null"
+          ? ""
+          : "${info["items"][0]["address"]["city"]}" +
+              ("${info["items"][0]["address"]["street"]}" == "null"
+                  ? ""
+                  : ", ${info["items"][0]["address"]["street"]}") +
+              ("${info["items"][0]["address"]["houseNumber"]}" == "null"
+                  ? ""
+                  : ", ${info["items"][0]["address"]["houseNumber"]}");
+    } else
+      throw Exception("Address fetch from Here.com went wrong");
   }
 
   Future<RegisterResponse> register(RegisterRequest request) async {
