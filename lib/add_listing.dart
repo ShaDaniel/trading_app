@@ -15,6 +15,8 @@ import 'common_elements/text_fields.dart';
 enum ListingAction { Create, Update }
 
 class CreateUpdateListing extends StatelessWidget {
+  // Огромный нечитабельный уродец.
+
   final _formKey = new GlobalKey<FormState>();
   final ListingRequest request = new ListingRequest();
   Map<String, dynamic> jsonCategories;
@@ -163,9 +165,12 @@ class CreateUpdateListing extends StatelessWidget {
   }
 
   void listingCreateUpdate(BuildContext context, ListingAction action) {
+    // Почему бы не сделать два разных метода вместо енама и свича? -42
+
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       Fluttertoast.showToast(
+          // Там же целый файл с враппером для этой штуки есть.
           msg: "Processing...",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,

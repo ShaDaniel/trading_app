@@ -7,6 +7,7 @@ import 'package:login_page/rest_api/listings.dart';
 import 'rest_api/api.dart';
 
 enum Filters {
+  // Полезный енам.
   PersonUuid,
 }
 
@@ -102,6 +103,7 @@ class _FeedListState extends State<FeedList> {
     });
   }
 
+  // Почему это не просто build?
   Widget _buildAdvertisements() {
     return ListView.separated(
         itemCount: (_listings.length + 1) ~/ 2,
@@ -139,7 +141,7 @@ class _FeedListState extends State<FeedList> {
                 ],
               ));
         });
-  }
+  } // При правильном форматировании скобки выстраиваются аккуратной лесенкой.
 
   @override
   void initState() {

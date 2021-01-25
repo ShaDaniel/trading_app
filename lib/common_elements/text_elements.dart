@@ -1,6 +1,24 @@
 import 'package:flutter/material.dart';
 import 'colors.dart' as colors;
 
+// Это делается так:
+
+class CustomText extends Text {
+  CustomText(String text, double fontSize)
+      : super(text, style: _CustomTextStyle(fontSize));
+}
+
+class _CustomTextStyle extends TextStyle {
+  _CustomTextStyle(double fontSize)
+      : super(
+          fontSize: fontSize,
+          color: colors.textMain,
+          fontWeight: FontWeight.bold,
+        );
+}
+
+// DRY
+
 class TextPrimary extends StatelessWidget {
   final String text;
   TextPrimary({this.text});

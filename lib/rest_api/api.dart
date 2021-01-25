@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:login_page/common_elements/globals.dart' as globals;
 
 class API {
+  // Приватных адресов в коде, тем более в публичном репозитории, быть не должно.
   String baseUrl = "http://45.9.190.78:7777/";
 
   Future<LoginResponse> login(LoginRequest request) async {
@@ -18,6 +19,7 @@ class API {
     final response =
         await http.post(baseUrl + "api/users/login/", body: request.toJson());
 
+    // Лол, дебаг. Принты в коде оставлять нельзя.
     print(request.toJson()); //debug
     print(baseUrl + "api/users/login/"); //debug
     if (response.statusCode == 200 || response.statusCode == 400) {
@@ -32,7 +34,10 @@ class API {
   }
 
   Future<String> getAddressFromCoords(LocationData coords) async {
+    // Ты запушил код с приватным токеном, и это пиздец. Понятно, этот конкретный
+    // ничего не стоит, но нельзя даже думать, чтобы вставить такое прямо в код.
     var apiKey = "8MR1Km-kluRtgoCtuiCOEnSqI5WAhGVpbaMc0o5xEf4";
+    // Такие урлы в общем тоже в конфиг-файле должны лежать.
     var url =
         "https://revgeocode.search.hereapi.com/v1/revgeocode?at=${coords.latitude},${coords.longitude}&lang=ru-RU&apiKey=${apiKey}";
     print(url);
@@ -42,6 +47,7 @@ class API {
     print(info);
 
     if (response.statusCode == 200 || response.statusCode == 400) {
+      // Nested ternary: grade -42
       return "${info["items"][0]["address"]["city"]}" == "null"
           ? ""
           : "${info["items"][0]["address"]["city"]}" +
@@ -51,6 +57,15 @@ class API {
               ("${info["items"][0]["address"]["houseNumber"]}" == "null"
                   ? ""
                   : ", ${info["items"][0]["address"]["houseNumber"]}");
+      // Неужели это лучше, чем:
+      var city = info["items"][0]["address"]["city"];
+      if (city == "null") return "";
+      var street = info["items"][0]["address"]["street"];
+      if (street == "null") return "$city";
+      var houseNumber = info["items"][0]["address"]["houseNumber"];
+      if (houseNumber == "null") return "$city, $street";
+      return "$city, $street, $houseNumber";
+      //
     } else
       throw Exception("Address fetch from Here.com went wrong");
   }

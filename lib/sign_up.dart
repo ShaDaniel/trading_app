@@ -51,6 +51,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 onSaved: (value) => registerRequest.email = value,
                 labelText: "e-mail",
                 preIcon: Icons.mail_outline,
+                // validator: validateLogin,
                 validator: (value) {
                   return validateLogin(value);
                 },
@@ -74,6 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 IconButton(
                   onPressed: () {
                     Fluttertoast.showToast(
+                        // АСТАНАВИТЕСЬ
                         msg:
                             "Your password must be at least 8 characters long, be of mixed case and also contain a digit or symbol",
                         toastLength: Toast.LENGTH_SHORT,

@@ -21,6 +21,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+        // Поскольку этот виджет упакован в другой аналогичный, он скроллится вверх
+        // за пределы экрана и показывает под собой пустоту, которую скроллить обратно нельзя
         child: Container(
             child: Column(children: <Widget>[
       SizedBox(height: 30),

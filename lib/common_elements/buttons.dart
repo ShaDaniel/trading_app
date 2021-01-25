@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'colors.dart' as colors;
 
+// Если ты хочешь кастомизировать какие-то виджеты, нужно от них и наследоваться
+// и в конструкор суперкласса передавать свои константы.
+
 class PrimaryButton extends StatelessWidget {
   final String _text;
   final Function _func;

@@ -2,6 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'listings.g.dart';
 
+// См. listing_create.dart
+// В этом файле, несмотря на название, не только listings
+// И почему у всех конструкторов аргументы опциональные?
+
 @JsonSerializable(explicitToJson: true)
 class ListingsResponse {
   int count;

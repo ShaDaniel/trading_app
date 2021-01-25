@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'colors.dart' as colors;
 
+// Вот это монстр.
+
 class PrimaryTextField extends StatelessWidget {
   final String labelText;
   final IconData preIcon;
@@ -33,6 +35,8 @@ class PrimaryTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
+        // Ты создал целый класс, чтобы сэкономить эту строку?
+        // Зачем здесь отдельная тема вообще?
         data: Theme.of(context).copyWith(primaryColor: colors.textScndry),
         child: TextFormField(
           onTap: onTap,
@@ -49,6 +53,7 @@ class PrimaryTextField extends StatelessWidget {
           obscureText: obscure,
           validator: validator,
           controller: controller,
+          // Достаточно было просто сделать наследника InputDecoration.
           decoration: InputDecoration(
               labelText: labelText,
               prefixIcon: Icon(preIcon),

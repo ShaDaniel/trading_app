@@ -15,6 +15,8 @@ import 'common_elements/colors.dart' as colors;
 import 'package:location/location.dart' as location;
 import 'package:geocoding/geocoding.dart';
 
+// Этот файл перегружен. Валидации пароля действительно место в мейне?
+
 Future<void> initCache() async {
   var prefs = globals.prefs = await globals.sharedPreferencesTask;
   if (prefs.containsKey('flutterLogin') &&
@@ -92,6 +94,7 @@ class MyApp extends StatelessWidget {
         ),
         home: loggedIn ? MainScreens() : LoginPage(),
         routes: {
+          // Где используются эти роуты?
           "/profile": (_) => MainScreens(),
           "/logout": (_) => LogoutPage(),
           "/login": (_) => LoginPage(),
@@ -145,6 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                   preIcon: Icons.vpn_key_outlined,
                   obscure: true,
                   validator: (value) {
+                    // Не рекомендую использовать return в анонимных функциях
                     if (value.isEmpty)
                       return "The Login/Password pair doesn't exist";
                     return null;
@@ -170,6 +174,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void signUpFunc(BuildContext context) {
+    // Dead code
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => SignUpPage()));
   }
@@ -187,6 +192,7 @@ class _LoginPageState extends State<LoginPage> {
           initBasicInfo();
         }
         if (value.token.isNotEmpty) {
+          // Зачем ещё раз проверка?
           showToast("Login successful!");
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => MainScreens()));

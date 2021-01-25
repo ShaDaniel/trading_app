@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'common_elements/colors.dart' as colors;
 
+// Получается, все или почти все виджеты Stateful?
+// Это очень плохо, их нужно использовать только там, где действительно
+// необходим какой-то нестатичный блок.
+
 class BasicPage extends StatefulWidget {
   final Widget child;
   final Widget bottomPanel;

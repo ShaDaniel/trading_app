@@ -4,6 +4,9 @@ import 'package:login_page/rest_api/listings.dart';
 
 part 'listing_create.g.dart';
 
+// Дополнительная библиотека, которая ещё и лишние файлы генерирует? Зачем?
+// Есть же встроенный json
+
 @JsonSerializable(includeIfNull: false)
 class ListingRequest {
   String title;
@@ -12,10 +15,11 @@ class ListingRequest {
   String category;
   int status;
   int quantity;
-  bool condition_new;
+  bool condition_new; // Из-за этого имя переменной не в правильном формате.
   dynamic characteristics;
   Seller seller;
 
+  // Этот конструктор нужен только для библиотеки.
   ListingRequest({
     this.title,
     this.description,
@@ -28,7 +32,10 @@ class ListingRequest {
     this.seller,
   });
 
+  // И в фабрике здесь тоже никакого смысла нет.
   factory ListingRequest.fromJson(Map<String, dynamic> json) =>
       _$ListingRequestFromJson(json);
   Map<String, dynamic> toJson() => _$ListingRequestToJson(this);
+
+  // Можно было бы оставить один конструктор со списком инициализации и всё.
 }

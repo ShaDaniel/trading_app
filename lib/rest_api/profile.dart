@@ -2,6 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'profile.g.dart';
 
+// См. listing_create.dart
+
 @JsonSerializable()
 class ProfileInfo {
   String uuid;

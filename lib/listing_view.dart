@@ -9,6 +9,7 @@ import 'package:login_page/rest_api/listings.dart';
 import 'common_elements/globals.dart' as globals;
 
 class ListingViewScreen extends StatelessWidget {
+  // Нет сил разбирать эту простыню. Надо разбивать на отдельные виджеты.
   Listing listingInfo;
 
   ListingViewScreen({this.listingInfo});

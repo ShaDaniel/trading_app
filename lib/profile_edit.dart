@@ -32,6 +32,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
               backgroundColor: Color(0xff2C1A1D),
             )));
           } else {
+            // Это должен быть отдельный класс.
             userInfo = response.data;
             return BasicPage(
               child: Form(
@@ -65,6 +66,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                           child: PrimaryButton("Save changes", () {
                         _formKey.currentState.save();
                         Fluttertoast.showToast(
+                            // Опять повторяется.
                             msg: "Processing...",
                             toastLength: Toast.LENGTH_SHORT,
                             gravity: ToastGravity.CENTER,

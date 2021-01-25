@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// Какой смысл в этих константах?
+
 Color accent = Color(0xffDBB3B1);
 
 Color btnBckgr = Colors.blue;

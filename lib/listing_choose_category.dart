@@ -16,28 +16,26 @@ class ChooseCategoryScreen extends StatelessWidget {
     List<Widget> categories = new List<Widget>();
 
     for (var category in nestedCategory.objects) {
-      categories.add(ListTile(
+      categories.add(
+        ListTile(
           title: Text(category.name),
-          onTap: category.objects.isEmpty
-              ? () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreateUpdateListing(
-                                chosenCategory: category.name,
-                                updatingListing: updatingListing,
-                              )));
-                }
-              : () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChooseCategoryScreen(
-                                nestedCategory: category,
-                                updatingListing: updatingListing,
-                              )));
-                }));
-    }
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => category.objects.isEmpty
+                  ? CreateUpdateListing(
+                      chosenCategory: category.name,
+                      updatingListing: updatingListing,
+                    )
+                  : ChooseCategoryScreen(
+                      nestedCategory: category,
+                      updatingListing: updatingListing,
+                    ),
+            ),
+          ),
+        ),
+      );
+    } // Выравнивание - пиздец.
     return categories;
   }
 

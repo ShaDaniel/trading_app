@@ -25,4 +25,9 @@ class LoginResponse {
     return LoginResponse(
         token: json["token"] ?? "", error: json["error"] ?? "");
   }
+
+  // Единственный конструктор (зачем этот класс вообще?)
+  // LoginResponse.fromJson(json)
+  //     : token = json['token'] ?? "",
+  //       error = json['error'] ?? "";
 }
